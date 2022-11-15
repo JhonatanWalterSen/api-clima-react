@@ -1,10 +1,12 @@
 import React from 'react'
 import { useState, useEffect } from 'react'
+import Loading from './Loading'
 import WeatherForm from './WeatherForm'
 import WeatherMainInfo from './WeatherMainInfo'
 
 const WeatherApp = () => {
     const [weather, setWeather] = useState(null)
+
     useEffect(() => {
         loadInfo()
     }, [])
@@ -17,10 +19,11 @@ const WeatherApp = () => {
         try {
             const request = await fetch(`${import.meta.env.VITE_REACT_API_URL}&key=${import.meta.env.VITE_REACT_APP_KEY}&q=${city}`)
             const json = await request.json()
-            console.log(json);
-            setWeather(json)
+            setTimeout(() => {
+                setWeather(json)
+            }, 3500);
         } catch (error) {
-            console.log(error);
+            return console.log(error.message);
         }
     }
 
@@ -31,7 +34,7 @@ const WeatherApp = () => {
     return (
         <div>
             <WeatherForm onChangeCity={handleChangeCity} />
-            <WeatherMainInfo weather={weather}></WeatherMainInfo>
+            {weather ? <WeatherMainInfo weather={weather} /> : <Loading/>}
         </div>
     )
 }

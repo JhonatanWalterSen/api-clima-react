@@ -9,10 +9,14 @@ const WeatherForm = ({ onChangeCity }) => {
         if (value !== '') {
             setCity(value)
         }
+        
     }
 
     function handleSubmit(e) {
         e.preventDefault()
+        /* if (city === typeof undefined) {
+            return console.log('No existe lugar');
+        } */
         onChangeCity(city)
     }
     return (
